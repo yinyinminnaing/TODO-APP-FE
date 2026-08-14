@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import type { CreateTodoPayload } from '@/types/todo'
 import { ref } from 'vue'
 
 const errorMessage = ref('')
 const newTask = ref('')
 const newDueDate = ref('')
 
-const emit = defineEmits(['add-todo'])
+const emit = defineEmits<{
+  'add-todo': [payload: CreateTodoPayload]
+}>()
 
 function handleSubmit() {
   if (newTask.value === '') {
@@ -13,8 +16,8 @@ function handleSubmit() {
     return
   }
   emit('add-todo', {
-    newTask: newTask.value,
-    newDueDate: newDueDate.value,
+    task: newTask.value,
+    dueDate: newDueDate.value,
   })
   errorMessage.value = ''
   newTask.value = ''
